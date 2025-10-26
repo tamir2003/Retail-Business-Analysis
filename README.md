@@ -35,132 +35,54 @@ This project is built using four key relational tables:
 
 ---
 
-## 🧩 Key SQL Components  
+## 📈 Business Questions & Insights
+**Q1. Which brands need promotional or pricing adjustments?**
 
-### 🔹 Freight Summary  
-```sql
-SELECT VendorName, ROUND(SUM(Freight), 2) AS Freight
-INTO Freight_Summary
-FROM vendor_invoice
-GROUP BY VendorName;
+Brands with low sales volume but high profit margins were identified.
+➡️ Indicates that pricing may be too high — promotions or discounts could improve sales.
 
-# 🌟 Vendor Performance Analysis
+**Q2. Which vendors and brands demonstrate the highest sales performance?**
 
-Welcome to the **Vendor Performance Analysis** project! 🚀 This SQL-powered solution transforms raw sales, purchase, and freight data into **actionable insights** to boost profitability, optimize inventory, and streamline operations. Dive in to uncover strategies for smarter business decisions! 💡
+Top vendors generated the maximum TotalSalesDollars and high GrossProfit — indicating effective sales and inventory management.
 
----
+**Q3. Which vendors contribute the most to total purchase dollars?**
 
-## 🎯 Project Overview
+Identified high-value vendors who account for a large share of total purchases.
+➡️ Useful for negotiating bulk discounts and improving supplier relationships.
 
-This project harnesses the power of SQL to analyze vendor and brand performance. By leveraging **Common Table Expressions (CTEs)**, it combines datasets to deliver a **unified vendor performance summary** that answers critical business questions. From pricing strategies to inventory optimization, this project is your guide to data-driven success! 📈
+**Q4. Does purchasing in bulk reduce unit cost?**
 
----
+**✅ Yes!**
+Vendors buying in bulk (large order sizes) get unit prices as low as $10.78, nearly 72% cheaper than smaller orders.
+➡️ Effective bulk pricing strategies lead to higher margins and stronger vendor partnerships.
 
-## 🛠️ Analysis Components
+**Q5. Which vendors have low inventory turnover (slow-moving stock)?**
 
-### 📦 1. Freight Summary
-- **What it does**: Aggregates freight costs per vendor to spotlight logistics inefficiencies.
-- **Output**: A clear view of freight expenses for cost optimization.
+Vendors with StockTurnOver < 1 indicate excess inventory and poor sales velocity.
+➡️ Need inventory optimization and clearance strategies.
 
-### 🛒 2. Purchase Summary
-- **What it does**: Summarizes total purchases, quantities, and unit costs by vendor and brand.
-- **Output**: Insights for cost analysis and supplier negotiations.
+**Q6. How much capital is locked in unsold inventory per vendor?**
 
-### 💸 3. Sales Summary
-- **What it does**: Calculates total sales quantity, sales dollars, and average price per vendor.
-- **Output**: Key metrics to evaluate revenue and sales performance.
+Vendors with high purchase dollars but low sales are tying up capital in unsold goods.
+➡️ Reducing this improves working capital efficiency and lowers storage costs.
 
-### 📊 4. Vendor Summary (CTE Approach)
-- **What it does**: Combines purchase, sales, and freight data using CTEs for a holistic view.
-- **Output**:
-  - `Vendor_sale_summary`: Initial vendor performance overview.
-  - `VendorSales_summary`: Final enriched table packed with KPIs.
-
----
-
-## ❓ Business Questions & Insights
-
-> ### 🔹 Q1. Which brands need promotional or pricing adjustments?
-> - **Insight**: Brands with low sales but high profit margins suggest pricing is too steep.
-> - **Action**: Launch promotions or discounts to drive sales. 🎉
-
-> ### 🔹 Q2. Which vendors and brands shine in sales performance?
-> - **Insight**: Top vendors deliver high `TotalSalesDollars` and `GrossProfit`.
-> - **Action**: Replicate their effective sales and inventory strategies. 🌟
-
-> ### 🔹 Q3. Which vendors drive the most purchase dollars?
-> - **Insight**: High-value vendors dominate total purchases.
-> - **Action**: Negotiate bulk discounts and strengthen supplier ties. 🤝
-
-> ### 🔹 Q4. Does bulk purchasing reduce unit costs?
-> - **Insight**: Yes! Bulk orders achieve unit prices as low as **$10.78**, ~72% cheaper than smaller orders.
-> - **Action**: Prioritize bulk buying for better margins. 💰
-
-> ### 🔹 Q5. Which vendors have slow-moving stock?
-> - **Insight**: Vendors with `StockTurnOver < 1` hold excess inventory with low sales velocity.
-> - **Action**: Optimize inventory and deploy clearance strategies. 📉
-
-> ### 🔹 Q6. How much capital is tied up in unsold inventory?
-> - **Insight**: High purchase-low sales vendors lock up working capital.
-> - **Action**: Improve capital efficiency and cut storage costs. 🔄
-
----
-
-## 📊 Statistical Highlights
-
-| **Metric**            | **Observation**                                                                 |
-|-----------------------|--------------------------------------------------------------------------------|
-| **Gross Profit**      | Minimum of **-52,002.78**, signaling losses in some transactions.               |
-| **Profit Margin (%)** | Negative/infinite values due to loss-making or zero sales.                     |
-| **Sales Quantity & Dollars** | Zero sales for some products indicate obsolete/unsold stock.              |
-| **Freight Cost**      | Ranges from **0.09 to 257,032.07**, hinting at logistics inefficiencies.       |
-| **Stock Turnover**    | Varies from **0 to 274.5**, showing uneven sales velocity.                     |
-
----
+## 📊 Statistical Summary Highlights
+- Metric	Observation
+- Gross Profit	Minimum value of -52,002.78, indicating losses on some transactions.
+- Profit Margin	Includes negative and infinite values due to zero or loss-making sales.
+- Sales Quantity & Dollars	Some products have 0 sales, representing obsolete or unsold stock.
+- Freight Cost	Ranges from 0.09 to 257,032.07, showing logistics inefficiencies or bulk shipments.
+- Stock Turnover	Ranges from 0 to 274.5, implying varied sales velocity across vendors.
 
 ## 📚 Key Metrics Calculated
-
-| **Metric**                  | **Description**                                      | **Formula**                                                                 |
-|-----------------------------|-----------------------------------------------------|-----------------------------------------------------------------------------|
-| **Gross Profit**            | Profit after subtracting purchase costs              | `TotalSalesDollars - TotalPurchaseDollars`                                  |
-| **Profit Margin (%)**       | Measures profitability as a percentage               | `((TotalSalesDollars - TotalPurchaseDollars) / TotalSalesDollars) * 100`   |
-| **Stock Turnover**          | Evaluates sales efficiency vs. inventory             | `TotalSalesQuantity / TotalPurchaseQuantity`                                |
-| **Sales to Purchase Ratio** | Revenue generated per purchase dollar                | `TotalSalesDollars / TotalPurchaseDollars`                                  |
-
----
+-  Metric	Description	Formula
+-  Gross Profit	Profit earned after deducting purchase cost	TotalSalesDollars - TotalPurchaseDollars
+-  Profit Margin (%)	Profitability ratio	((TotalSalesDollars - TotalPurchaseDollars) / TotalSalesDollars) * 100
+-  Stock Turnover	Sales efficiency vs inventory	TotalSalesQuantity / TotalPurchaseQuantity
+-  Sales to Purchase Ratio	Revenue per purchase dollar	TotalSalesDollars / TotalPurchaseDollars
 
 ## 🚀 Results
 
-- ✅ **Delivered**: `VendorSales_Summary` table with all key KPIs.
-- 📊 **Insights**: Actionable metrics on vendor profitability, pricing, and inventory.
-- 💡 **Opportunities**: Identified cost-saving and performance-boosting strategies.
-
----
-
-## 💼 How to Get Started
-
-1. **Import Scripts** 📥
-   - Load all `.sql` scripts into **SQL Server** or **PostgreSQL**.
-
-2. **Run Queries in Order** ▶️
-   - `Freight_Summary`
-   - `Purchase_Summary`
-   - `Sales_Summary`
-   - `Vendor_sale_summary`
-   - `VendorSales_summary` (final enriched output)
-
-3. **Visualize & Analyze** 📈
-   - Import results into **Power BI** or **Excel** for stunning visualizations and trend analysis.
-
----
-
-## 🏁 Conclusion
-
-This project showcases SQL’s power to go beyond data retrieval, delivering **transformative business insights**. By integrating sales, purchase, and freight data, it fuels:
-
-- 🧭 **Strategic Decisions**: Smarter pricing and promotional strategies.
-- 💵 **Profitability Growth**: Identification of top-performing vendors and brands.
-- ⚙️ **Operational Excellence**: Optimized inventory and logistics.
-
----
-
+- **✅ Created a VendorSales_Summary table with all key KPIs.**
+- **✅ Delivered actionable insights into vendor profitability, pricing strategies, and inventory management.**
+- **✅ Identified opportunities for cost reduction, higher sales efficiency, and inventory optimization.**
