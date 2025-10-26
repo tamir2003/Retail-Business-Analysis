@@ -143,6 +143,8 @@ PurchaseContribution[TotalPurchaseDollars] / SUM(PurchaseContribution[TotalPurch
 - Top Brands by Sales: A bar chart listing top brands like Tito's Handmade (7.4M).
 - Low Performing Vendors: A table identifying vendors with lower performance (e.g., Alisa Carr Bev. at 0.615).
 - Low Performing Brands: A scatter plot correlating total sales and profit margin for underperforming brands.
+
+
   
  <img width="1358" height="649" alt="image" src="https://github.com/user-attachments/assets/c5b94b02-70ad-47eb-bd6a-796b82ac6d73" />
 
@@ -155,7 +157,11 @@ PurchaseContribution[TotalPurchaseDollars] / SUM(PurchaseContribution[TotalPurch
 - LowTurnoverVendor: Tracks AvgStockTurnOver and VendorName.
 - BrandPerformance: Features AvgProfitMargin, Description, TargetBrand, and TotalSales.
 
+
+
 <img width="1366" height="768" alt="Screenshot (59)" src="https://github.com/user-attachments/assets/ce13b028-b996-4d05-8ecd-f55207510ad2" />
+
+
 
 **The model is structured with calculated groups and relationships to enable dynamic analysis of vendor and brand performance metrics.**
 
