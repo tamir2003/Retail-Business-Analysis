@@ -163,5 +163,5 @@ PurchaseContribution[TotalPurchaseDollars] / SUM(PurchaseContribution[TotalPurch
 
 
 
-**The model is structured with calculated groups and relationships to enable dynamic analysis of vendor and brand performance metrics.**
+## The model is structured with calculated groups and relationships to enable dynamic analysis of vendor and brand performance metrics.
 
