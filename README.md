@@ -99,7 +99,7 @@ IF(
 - Useful for pricing strategy or promotion planning.
   
 
-**🔹 2️⃣ Purchase Contribution %**
+**2️⃣ Purchase Contribution %**
 
 - Calculates each vendor’s contribution to total purchases.
 
@@ -112,7 +112,7 @@ PurchaseContribution[TotalPurchaseDollars] / SUM(PurchaseContribution[TotalPurch
 - Helps identify high-value vendors and cost concentration.
   
 
-**🔹 3️⃣ UnSold Capital**
+**3️⃣ UnSold Capital**
 - Calculates the capital tied up in unsold inventory per vendor.
 
 **UnSoldCapital** = (vendor_sales_summary[TotalPurchaseQuantity] - vendor_sales_summary[TotalSalesQuantity]) * vendor_sales_summary[PurchasePrice]
