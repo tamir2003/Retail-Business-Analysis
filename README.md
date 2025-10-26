@@ -80,6 +80,45 @@ Vendors with high purchase dollars but low sales are tying up capital in unsold 
 -  Profit Margin (%)	Profitability ratio	((TotalSalesDollars - TotalPurchaseDollars) / TotalSalesDollars) * 100
 -  Stock Turnover	Sales efficiency vs inventory	TotalSalesQuantity / TotalPurchaseQuantity
 -  Sales to Purchase Ratio	Revenue per purchase dollar	TotalSalesDollars / TotalPurchaseDollars
+ 
+## 🧮 Additional KPIs using DAX
+**1️⃣ Target Brand**
+
+- Identifies brands that have low total sales but high profit margin, i.e., candidates for promotional or pricing adjustments.
+
+**TargetBrand** = 
+IF(
+    [TotalSales] <= PERCENTILEX.INC(BrandPerformance, BrandPerformance[TotalSales], 0.15) 
+    && [AvgProfitMargin] >= PERCENTILEX.INC(BrandPerformance, BrandPerformance[AvgProfitMargin], 0.85),
+    "Yes",
+    "No"
+)
+
+**Explanation:**
+- Marks brands in the bottom 15% of sales but top 15% of profit margin as "Yes".
+- Useful for pricing strategy or promotion planning.
+
+**🔹 2️⃣ Purchase Contribution %**
+
+- Calculates each vendor’s contribution to total purchases.
+
+**PurchaseContribution%** = 
+PurchaseContribution[TotalPurchaseDollars] / SUM(PurchaseContribution[TotalPurchaseDollars]) * 100
+
+
+**Explanation:**
+- Shows the percentage of total purchases contributed by each vendor.
+- Helps identify high-value vendors and cost concentration.
+
+**🔹 3️⃣ UnSold Capital**
+- Calculates the capital tied up in unsold inventory per vendor.
+
+**Un-soldCapital** = 
+(vendor_sales_summary[TotalPurchaseQuantity] - vendor_sales_summary[TotalSalesQuantity]) * vendor_sales_summary[PurchasePrice]
+
+**Explanation:**
+- Measures the monetary value of unsold stock.
+- Critical for working capital analysis and inventory optimization.
 
 ## 🚀 Results
 
