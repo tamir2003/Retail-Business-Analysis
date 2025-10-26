@@ -86,3 +86,5 @@ Vendors with high purchase dollars but low sales are tying up capital in unsold 
 - **✅ Created a VendorSales_Summary table with all key KPIs.**
 - **✅ Delivered actionable insights into vendor profitability, pricing strategies, and inventory management.**
 - **✅ Identified opportunities for cost reduction, higher sales efficiency, and inventory optimization.**
+- <img width="1358" height="649" alt="image" src="https://github.com/user-attachments/assets/c5b94b02-70ad-47eb-bd6a-796b82ac6d73" />
+
