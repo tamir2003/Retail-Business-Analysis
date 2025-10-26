@@ -97,6 +97,7 @@ IF(
 **Explanation:**
 - Marks brands in the bottom 15% of sales but top 15% of profit margin as "Yes".
 - Useful for pricing strategy or promotion planning.
+  
 
 **🔹 2️⃣ Purchase Contribution %**
 
@@ -109,12 +110,12 @@ PurchaseContribution[TotalPurchaseDollars] / SUM(PurchaseContribution[TotalPurch
 **Explanation:**
 - Shows the percentage of total purchases contributed by each vendor.
 - Helps identify high-value vendors and cost concentration.
+  
 
 **🔹 3️⃣ UnSold Capital**
 - Calculates the capital tied up in unsold inventory per vendor.
 
-**Un-soldCapital** = 
-(vendor_sales_summary[TotalPurchaseQuantity] - vendor_sales_summary[TotalSalesQuantity]) * vendor_sales_summary[PurchasePrice]
+**UnSoldCapital** = (vendor_sales_summary[TotalPurchaseQuantity] - vendor_sales_summary[TotalSalesQuantity]) * vendor_sales_summary[PurchasePrice]
 
 **Explanation:**
 - Measures the monetary value of unsold stock.
