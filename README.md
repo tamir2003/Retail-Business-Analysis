@@ -126,5 +126,36 @@ PurchaseContribution[TotalPurchaseDollars] / SUM(PurchaseContribution[TotalPurch
 - **✅ Created a VendorSales_Summary table with all key KPIs.**
 - **✅ Delivered actionable insights into vendor profitability, pricing strategies, and inventory management.**
 - **✅ Identified opportunities for cost reduction, higher sales efficiency, and inventory optimization.**
-- <img width="1358" height="649" alt="image" src="https://github.com/user-attachments/assets/c5b94b02-70ad-47eb-bd6a-796b82ac6d73" />
+
+## Dashboard
+**This project features a Vendor Performance Dashboard designed to analyze key metrics related to vendor and brand performance. The dashboard, built using Power BI, provides an overview of:**
+
+- Total Sales ($): 441.41M
+- Total Purchase ($): 307.34M
+- Gross Profit ($): 134.07M
+- Profit Margin (%): 38.7%
+- Unsold Capital ($): 2.71M
+
+**Key Visualizations:**
+
+- Purchase Contribution %: A donut chart highlighting the contribution of top vendors (e.g., E & J Gallo at 6.5%).
+- Top Vendors by Sales: A bar chart showcasing top vendors like Diageo North America Inc. (68M).
+- Top Brands by Sales: A bar chart listing top brands like Tito's Handmade (7.4M).
+- Low Performing Vendors: A table identifying vendors with lower performance (e.g., Alisa Carr Bev. at 0.615).
+- Low Performing Brands: A scatter plot correlating total sales and profit margin for underperforming brands.
+  
+ <img width="1358" height="649" alt="image" src="https://github.com/user-attachments/assets/c5b94b02-70ad-47eb-bd6a-796b82ac6d73" />
+
+
+## Data Model:
+**The underlying data model includes the following tables and relationships:**
+
+- PurchaseContribution: Contains PurchaseContribution%, TotalPurchaseDollars, and VendorName.
+- vendor_sales_summary: Includes ActualPrice, Brand, Description, FreightCost, GrossProfit, and ProfitMargin.
+- LowTurnoverVendor: Tracks AvgStockTurnOver and VendorName.
+- BrandPerformance: Features AvgProfitMargin, Description, TargetBrand, and TotalSales.
+
+<img width="1366" height="768" alt="Screenshot (59)" src="https://github.com/user-attachments/assets/ce13b028-b996-4d05-8ecd-f55207510ad2" />
+
+**The model is structured with calculated groups and relationships to enable dynamic analysis of vendor and brand performance metrics.**
 
