@@ -85,15 +85,10 @@ Vendors with high purchase dollars but low sales are tying up capital in unsold 
 **1️⃣ Target Brand**
 
 - Identifies brands that have low total sales but high profit margin, i.e., candidates for promotional or pricing adjustments.
-
-**TargetBrand** = 
-IF(
-    [TotalSales] <= PERCENTILEX.INC(BrandPerformance, BrandPerformance[TotalSales], 0.15) 
-    && [AvgProfitMargin] >= PERCENTILEX.INC(BrandPerformance, BrandPerformance[AvgProfitMargin], 0.85),
-    "Yes",
-    "No"
-)
-
+```DAX
+TargetBrand = IF([TotalSales] <= PERCENTILEX.INC(BrandPerformance, BrandPerformance[TotalSales], 0.15)
+                  && [AvgProfitMargin] >= PERCENTILEX.INC(BrandPerformance, BrandPerformance[AvgProfitMargin], 0.85),"Yes","No")
+```
 **Explanation:**
 - Marks brands in the bottom 15% of sales but top 15% of profit margin as "Yes".
 - Useful for pricing strategy or promotion planning.
@@ -102,10 +97,10 @@ IF(
 **2️⃣ Purchase Contribution %**
 
 - Calculates each vendor’s contribution to total purchases.
-
-**PurchaseContribution%** = 
-PurchaseContribution[TotalPurchaseDollars] / SUM(PurchaseContribution[TotalPurchaseDollars]) * 100
-
+  
+```DAX
+PurchaseContribution% = PurchaseContribution[TotalPurchaseDollars] / SUM(PurchaseContribution[TotalPurchaseDollars]) * 100
+```
 
 **Explanation:**
 - Shows the percentage of total purchases contributed by each vendor.
@@ -115,7 +110,9 @@ PurchaseContribution[TotalPurchaseDollars] / SUM(PurchaseContribution[TotalPurch
 **3️⃣ UnSold Capital**
 - Calculates the capital tied up in unsold inventory per vendor.
 
-**UnSoldCapital** = (vendor_sales_summary[TotalPurchaseQuantity] - vendor_sales_summary[TotalSalesQuantity]) * vendor_sales_summary[PurchasePrice]
+```DAX
+UnSoldCapital = (vendor_sales_summary[TotalPurchaseQuantity] - vendor_sales_summary[TotalSalesQuantity]) * vendor_sales_summary[PurchasePrice]
+```
 
 **Explanation:**
 - Measures the monetary value of unsold stock.
