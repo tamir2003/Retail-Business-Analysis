@@ -1,4 +1,4 @@
-# 📊 Vendor Sales & Purchase Data Analysis using SQL
+# 📊 Vendor Sales & Purchase Data Analysis
 
 ## 🧾 Project Overview  
 This project focuses on **analyzing vendor performance, purchase behavior, sales trends, and profitability** using **SQL**.  
