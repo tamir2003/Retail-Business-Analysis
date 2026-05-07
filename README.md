@@ -1,164 +1,496 @@
-# 📊 Vendor Sales & Purchase Data Analysis
+# Retail Business Analysis
 
-## 🧾 Project Overview  
-This project focuses on **analyzing vendor performance, purchase behavior, sales trends, and profitability** using **SQL**.  
-The goal is to transform raw transactional data into **meaningful business insights** that support **strategic decision-making** — such as identifying top-performing vendors, optimizing pricing, and reducing inventory costs.
+## Project Overview
 
----
+This project is an end-to-end **Retail Sales, Purchase, Vendor & Inventory Analytics** solution built using **Python, SQL Server, and Power BI**.
 
-## 🧠 Objective  
-Perform an **end-to-end data analysis** on vendor, purchase, and sales data to answer key business questions:
-
-- 🏆 Which vendors and brands drive the highest sales and profits?  
-- 🏬 Which vendors are overstocked or have slow-moving inventory?  
-- 💰 Does bulk purchasing result in cost savings?  
-- ⚙️ How efficiently is capital being utilized in purchases and sales?
+The project analyzes retail business performance across sales, purchases, vendors, freight cost, payment cycles, and inventory movement. The goal is to identify revenue drivers, vendor dependency, purchase behavior, stock movement accuracy, and inventory holding patterns to support data-driven business decisions.
 
 ---
 
-## 🗂️ Data Sources  
-This project is built using four key relational tables:
+## Business Objective
 
-| Table Name | Description |
-|-------------|-------------|
-| **purchases** | Purchase transactions by vendor, brand, and quantity |
-| **purchase_prices** | Purchase price details per brand and vendor |
-| **sales** | Sales quantity, price, and excise details |
-| **vendor_invoice** | Freight and logistics cost information |
+The main objective of this project is to answer key business questions:
 
----
-
-## ⚙️ Technologies Used  
-- 🧠 **SQL Server / T-SQL**  
-- 📊 **Microsoft Excel / Power BI** – for summary statistics & data visualization  
-- 🧩 **Data Cleaning, Aggregation & Analysis** using SQL CTEs and Summary Tables  
+- How much revenue did the business generate?
+- Which stores, vendors, products, and product sizes drive sales?
+- Which vendors receive the highest purchase investment?
+- How much freight cost is incurred and how significant is it?
+- How long does it take to receive stock and pay vendor invoices?
+- Which products hold the highest inventory value?
+- Is inventory movement internally consistent?
+- Are beginning inventory, purchases, sales, and ending inventory properly reconciled?
 
 ---
 
-## 📈 Business Questions & Insights
-**Q1. Which brands need promotional or pricing adjustments?**
+## Tools & Technologies Used
 
-Brands with low sales volume but high profit margins were identified.
-➡️ Indicates that pricing may be too high — promotions or discounts could improve sales.
+| Tool | Purpose |
+|---|---|
+| **Python** | Data cleaning, data validation, preprocessing |
+| **Pandas** | Data transformation and missing value handling |
+| **SQL Server** | Data quality checks, business analysis, views |
+| **T-SQL** | CTEs, window functions, aggregations, ranking, ABC analysis |
+| **Power BI** | Data modeling, DAX measures, dashboard development |
+| **DAX** | KPI calculations, ratios, time-based measures |
+| **Excel/CSV** | Source data files |
 
-**Q2. Which vendors and brands demonstrate the highest sales performance?**
+---
 
-Top vendors generated the maximum TotalSalesDollars and high GrossProfit — indicating effective sales and inventory management.
+## Dataset Description
 
-**Q3. Which vendors contribute the most to total purchase dollars?**
+The project uses six retail datasets:
 
-Identified high-value vendors who account for a large share of total purchases.
-➡️ Useful for negotiating bulk discounts and improving supplier relationships.
+| Table | Description |
+|---|---|
+| **Sales** | Product-level sales transactions across stores |
+| **Purchases** | Product purchase records from vendors |
+| **Purchase Prices** | Product price and vendor reference data |
+| **Vendor Invoice** | Vendor invoice, freight, and payment details |
+| **Beginning Inventory** | Opening inventory snapshot at the start of the year |
+| **Ending Inventory** | Closing inventory snapshot at the end of the year |
 
-**Q4. Does purchasing in bulk reduce unit cost?**
+---
 
-**✅ Yes!**
-Vendors buying in bulk (large order sizes) get unit prices as low as $10.78, nearly 72% cheaper than smaller orders.
-➡️ Effective bulk pricing strategies lead to higher margins and stronger vendor partnerships.
+## Key Business Metrics
 
-**Q5. Which vendors have low inventory turnover (slow-moving stock)?**
+| Metric | Value |
+|---|---:|
+| **Total Sales** | **$452.06M** |
+| **Total Purchase** | **$321.90M** |
+| **Estimated Sales-Purchase Gap** | **$130.16M** |
+| **Estimated Gap %** | **28.79%** |
+| **Total Freight Cost** | **$1.64M** |
+| **Freight %** | **0.51%** |
+| **Beginning Inventory Value** | **$68.05M** |
+| **Ending Inventory Value** | **$79.70M** |
+| **Inventory Value Change** | **17.12%** |
+| **Beginning Stock Quantity** | **4.22M units** |
+| **Purchased Quantity** | **33.58M units** |
+| **Sold Quantity** | **32.92M units** |
+| **Ending Stock Quantity** | **4.89M units** |
+| **Stock Variance** | **0** |
+| **Stores** | **80** |
+| **Vendors** | **127+** |
+| **Products** | **11K+** |
 
-Vendors with StockTurnOver < 1 indicate excess inventory and poor sales velocity.
-➡️ Need inventory optimization and clearance strategies.
+> **Note:** The sales-purchase gap is an estimated high-level margin indicator calculated as total sales minus total purchases. It is not a true COGS-based gross profit calculation.
 
-**Q6. How much capital is locked in unsold inventory per vendor?**
+---
 
-Vendors with high purchase dollars but low sales are tying up capital in unsold goods.
-➡️ Reducing this improves working capital efficiency and lowers storage costs.
+## Project Workflow
 
-## 📊 Statistical Summary Highlights
-- Metric	Observation
-- Gross Profit	Minimum value of -52,002.78, indicating losses on some transactions.
-- Profit Margin	Includes negative and infinite values due to zero or loss-making sales.
-- Sales Quantity & Dollars	Some products have 0 sales, representing obsolete or unsold stock.
-- Freight Cost	Ranges from 0.09 to 257,032.07, showing logistics inefficiencies or bulk shipments.
-- Stock Turnover	Ranges from 0 to 274.5, implying varied sales velocity across vendors.
+### 1. Data Cleaning using Python
 
-## 📚 Key Metrics Calculated
--  Metric	Description	Formula
--  Gross Profit	Profit earned after deducting purchase cost	TotalSalesDollars - TotalPurchaseDollars
--  Profit Margin (%)	Profitability ratio	((TotalSalesDollars - TotalPurchaseDollars) / TotalSalesDollars) * 100
--  Stock Turnover	Sales efficiency vs inventory	TotalSalesQuantity / TotalPurchaseQuantity
--  Sales to Purchase Ratio	Revenue per purchase dollar	TotalSalesDollars / TotalPurchaseDollars
- 
-## 🧮 Additional KPIs using DAX
-**1️⃣ Target Brand**
+Python was used to clean and prepare the raw datasets before loading them into SQL Server.
 
-- Identifies brands that have low total sales but high profit margin, i.e., candidates for promotional or pricing adjustments.
-```DAX
-TargetBrand = IF([TotalSales] <= PERCENTILEX.INC(BrandPerformance, BrandPerformance[TotalSales], 0.15)
-                  && [AvgProfitMargin] >= PERCENTILEX.INC(BrandPerformance, BrandPerformance[AvgProfitMargin], 0.85),"Yes","No")
+Key cleaning steps included:
+
+- Loaded six raw retail datasets.
+- Standardized column names.
+- Trimmed extra spaces from text fields such as vendor names.
+- Converted date columns into proper datetime format.
+- Converted numeric fields such as sales, purchase, quantity, price, freight, and tax values.
+- Handled missing values in product size, volume, description, and city columns.
+- Created inventory value columns:
+  - `BeginningInventoryValue = onHand × Price`
+  - `EndingInventoryValue = onHand × Price`
+- Exported cleaned datasets for SQL analysis.
+
+---
+
+### 2. SQL Data Quality Checks
+
+After loading cleaned data into SQL Server, data quality checks were performed to validate the datasets.
+
+Checks included:
+
+- Row count validation.
+- Date range validation.
+- Null value checks.
+- Duplicate checks.
+- Sales amount validation: `SalesDollars = SalesQuantity × SalesPrice`.
+- Purchase amount validation: `Dollars = Quantity × PurchasePrice`.
+- Invalid and zero-value transaction checks.
+- Vendor name consistency checks.
+- Brand-size consistency checks.
+- Inventory value validation.
+
+Important findings:
+
+- 55 zero-value sales records were found.
+- 153 zero-cost purchase records were found.
+- Some vendor numbers had multiple vendor name variations.
+- Some brands had multiple package-size formats.
+- Inventory value calculations were validated successfully.
+
+Zero-value and zero-cost quantity records were not deleted because they still affect inventory movement.
+
+---
+
+### 3. SQL Sales Analysis
+
+Sales analysis was performed to identify revenue drivers and sales patterns.
+
+Analysis included:
+
+- Overall sales KPIs.
+- Monthly sales trend.
+- Month-over-month sales growth.
+- Top stores by sales.
+- Top vendors by sales.
+- Top products by sales.
+- Top products by quantity sold.
+- Sales by product size.
+- Sales by classification.
+- Product revenue contribution.
+- ABC product segmentation.
+- Zero-value sales analysis.
+
+Key insights:
+
+- Total sales reached **$452.06M**.
+- December was the highest sales month with **$52.31M**.
+- July showed a strong peak with **$49.7M** in sales.
+- August saw a decline of around **21.4%** after the July peak.
+- Store 76 was the highest-performing store with around **$25.4M** in sales.
+- 1.75L products drove high revenue.
+- 50mL products drove high unit quantity.
+- 750mL products contributed the highest sales by size.
+- Top vendors such as DIAGEO, Martignetti, Pernod Ricard, Jim Beam, and Bacardi drove major revenue contribution.
+
+---
+
+### 4. SQL Purchase & Vendor Analysis
+
+Purchase and vendor analysis was performed to understand purchase investment, vendor dependency, freight cost, and payment behavior.
+
+Analysis included:
+
+- Overall purchase KPIs.
+- Monthly purchase trend.
+- Month-over-month purchase growth.
+- Top vendors by purchase spend.
+- Vendor purchase contribution.
+- Top products by purchase value.
+- Top products by purchase quantity.
+- Purchase by store.
+- Purchase by classification.
+- Freight cost analysis.
+- Freight percentage analysis.
+- Payment cycle analysis.
+- PO-to-receiving cycle analysis.
+- Vendor-level sales vs purchase comparison.
+- Product-level sales vs purchase comparison.
+- Zero-cost purchase analysis.
+
+Key insights:
+
+- Total purchase value was **$321.90M**.
+- DIAGEO NORTH AMERICA INC was the top purchase vendor.
+- The top 5 vendors contributed approximately **45%** of total purchase spend.
+- Total freight cost was **$1.64M**, representing only **0.51%** of invoice value.
+- Average payment cycle was around **35.5 days**.
+- Average stock receiving time was around **7.6 days** after purchase order creation.
+- Major vendors generated sales value higher than purchase investment.
+
+---
+
+### 5. SQL Inventory Analysis
+
+Inventory analysis was performed to evaluate opening stock, closing stock, unsold inventory value, stock movement, and reconciliation.
+
+Analysis included:
+
+- Overall inventory KPIs.
+- Opening vs closing inventory comparison.
+- Ending inventory by city and store.
+- Top products by ending inventory value.
+- Top products by ending stock quantity.
+- Products in beginning inventory but not ending inventory.
+- Products in ending inventory but not beginning inventory.
+- Inventory movement reconciliation.
+- Sell-through ratio.
+- Slow-moving inventory analysis.
+- High-value unsold inventory analysis.
+- ABC inventory classification.
+
+Inventory reconciliation formula:
+
+```text
+Expected Ending Stock = Beginning Stock + Purchased Quantity - Sold Quantity
 ```
-**Explanation:**
-- Marks brands in the bottom 15% of sales but top 15% of profit margin as "Yes".
-- Useful for pricing strategy or promotion planning.
-  
 
-**2️⃣ Purchase Contribution %**
+Result:
 
-- Calculates each vendor’s contribution to total purchases.
-  
-```DAX
-PurchaseContribution% = PurchaseContribution[TotalPurchaseDollars] / SUM(PurchaseContribution[TotalPurchaseDollars]) * 100
+```text
+4.22M + 33.58M - 32.92M = 4.89M
 ```
 
-**Explanation:**
-- Shows the percentage of total purchases contributed by each vendor.
-- Helps identify high-value vendors and cost concentration.
-  
+Actual ending stock:
 
-**3️⃣ UnSold Capital**
-- Calculates the capital tied up in unsold inventory per vendor.
-
-```DAX
-UnSoldCapital = (vendor_sales_summary[TotalPurchaseQuantity] - vendor_sales_summary[TotalSalesQuantity]) * vendor_sales_summary[PurchasePrice]
+```text
+4.89M
 ```
 
-**Explanation:**
-- Measures the monetary value of unsold stock.
-- Critical for working capital analysis and inventory optimization.
+Stock variance:
 
-## 🚀 Results
+```text
+0
+```
 
-- **✅ Created a VendorSales_Summary table with all key KPIs.**
-- **✅ Delivered actionable insights into vendor profitability, pricing strategies, and inventory management.**
-- **✅ Identified opportunities for cost reduction, higher sales efficiency, and inventory optimization.**
+Key insight:
 
-## Dashboard
-**This project features a Vendor Performance Dashboard designed to analyze key metrics related to vendor and brand performance. The dashboard, built using Power BI, provides an overview of:**
+Inventory movement matched perfectly across all store-product records, confirming that sales, purchases, and inventory snapshots were internally consistent.
 
-- Total Sales ($): 441.41M
-- Total Purchase ($): 307.34M
-- Gross Profit ($): 134.07M
-- Profit Margin (%): 38.7%
-- Unsold Capital ($): 2.71M
+---
 
-**Key Visualizations:**
+## Power BI Data Model
 
-- Purchase Contribution %: A donut chart highlighting the contribution of top vendors (e.g., E & J Gallo at 6.5%).
-- Top Vendors by Sales: A bar chart showcasing top vendors like Diageo North America Inc. (68M).
-- Top Brands by Sales: A bar chart listing top brands like Tito's Handmade (7.4M).
-- Low Performing Vendors: A table identifying vendors with lower performance (e.g., Alisa Carr Bev. at 0.615).
-- Low Performing Brands: A scatter plot correlating total sales and profit margin for underperforming brands.
+A star schema model was created in Power BI.
+
+### Dimension Tables
+
+| Dimension | Description |
+|---|---|
+| **Date Table** | Continuous calendar table created in Power BI |
+| **dim_product** | Product details with ABC classification |
+| **dim_vendor** | Clean vendor names by vendor number |
+| **dim_store** | Store and city details |
+
+### Fact Tables
+
+| Fact Table | Description |
+|---|---|
+| **fact_sales** | Sales transactions |
+| **fact_purchases** | Purchase records |
+| **fact_vendor_invoice** | Invoice, freight, and payment details |
+| **fact_inventory_movement** | Beginning, purchase, sales, ending, and stock variance data |
+
+ABC classes were added to `dim_product` using `LOOKUPVALUE()` for a cleaner model and easier filtering.
+
+---
+
+## Power BI Dashboard Pages
+
+The dashboard contains four main report pages:
+
+### 1. Executive Overview
+
+Includes:
+
+- Total Sales
+- Total Purchase
+- Estimated Sales-Purchase Gap
+- Estimated Gap %
+- Ending Inventory Value
+- Stock Variance Quantity
+- Monthly Sales Trend
+- Month-over-Month Sales Growth
+- Sales vs Purchase Trend
+- Top Stores by Sales
+- Top Vendors by Sales
+- Sales by Classification
+
+### 2. Sales Performance Analysis
+
+Includes:
+
+- Total Sales
+- Total Sales Quantity
+- Average Selling Price
+- Total Excise Tax
+- Sales by Product Size
+- Product ABC Class Contribution
+- Monthly Sales Trend
+- Top Sold Products
+- Product Sales Details
+- Sales by Vendor
+
+### 3. Vendor & Purchase Analysis
+
+Includes:
+
+- Total Purchase
+- Average Purchase Price
+- Total Freight
+- Average Payment Days
+- Vendor Sales vs Purchase Pattern
+- Vendors by Freight Cost
+- Vendors by Purchase Spend
+- Vendor-level summary table
+- Freight %
+- Sales-to-Purchase Ratio
+
+### 4. Inventory Analysis
+
+Includes:
+
+- Beginning Inventory Value
+- Ending Inventory Value
+- Inventory Value Change %
+- Stock Variance Quantity
+- Sell-Through Ratio
+- Ending Inventory by City
+- Top Products by Ending Inventory Value
+- Inventory ABC Class Analysis
+- Inventory Movement Table
+
+---
+
+## Important DAX Measures
+
+Some of the key DAX measures used:
+
+```DAX
+Total Sales =
+CALCULATE(
+    SUM(fact_sales[SalesDollars]),
+    fact_sales[IsFinancialSale] = 1
+)
+```
+
+```DAX
+Total Purchase =
+CALCULATE(
+    SUM(fact_purchases[PurchaseDollars]),
+    fact_purchases[IsFinancialPurchase] = 1
+)
+```
+
+```DAX
+Total Freight =
+SUM(fact_vendor_invoice[Freight])
+```
+
+```DAX
+Freight % =
+DIVIDE(
+    [Total Freight],
+    [Total Invoice Dollars]
+)
+```
+
+```DAX
+Sell Through Ratio =
+DIVIDE(
+    [Sold Quantity],
+    [Beginning Quantity] + [Purchased Quantity]
+)
+```
+
+```DAX
+Stock Variance Quantity =
+SUM(fact_inventory_movement[StockVarianceQty])
+```
+
+```DAX
+Inventory Value Change % =
+DIVIDE(
+    [Ending Inventory Value] - [Beginning Inventory Value],
+    [Beginning Inventory Value]
+)
+```
+
+---
+
+## Key Insights
+
+### Sales Insights
+
+- Total sales were **$452.06M**.
+- December was the highest sales month.
+- July showed a strong seasonal sales peak.
+- August declined by around **21.4%** after the July peak.
+- Store 76 was the top-performing store.
+- Top vendors drove a large share of sales.
+- 1.75L products were major revenue drivers.
+- 50mL products were major quantity drivers.
+
+### Purchase & Vendor Insights
+
+- Total purchases were **$321.90M**.
+- Top vendors showed strong concentration in purchase spend.
+- Freight cost was low at only **0.51%** of invoice value.
+- Average vendor payment time was around **35.5 days**.
+- Average stock receiving time was around **7.6 days**.
+- Top vendors generated sales value higher than purchase investment.
+
+### Inventory Insights
+
+- Beginning inventory value was **$68.05M**.
+- Ending inventory value increased to **$79.70M**.
+- Inventory value increased by **17.12%**.
+- Sell-through ratio was approximately **87%**.
+- Inventory reconciliation showed **zero stock variance**.
+- High-value ending inventory was concentrated in large bottle-size products.
+- Mountmend was the top city by ending inventory value.
+
+---
+
+## Business Recommendations
+
+Based on the analysis:
+
+- Monitor high-value inventory products closely to avoid overstocking.
+- Review slow-moving premium inventory for markdowns, promotions, or vendor return discussions.
+- Maintain strong relationships with top vendors while reducing over-dependency risk.
+- Use seasonal sales patterns to plan inventory before peak months such as July and December.
+- Investigate low-performing stores and compare their product mix with top-performing stores.
+- Track freight percentage regularly, even though current freight cost impact is low.
+- Use ABC classification to prioritize high-impact revenue and inventory products.
+
+---
+
+## Project Outcome
+
+This project demonstrates the ability to:
+
+- Clean and validate large multi-source datasets.
+- Build SQL-based analytical layers.
+- Perform sales, purchase, vendor, freight, and inventory analysis.
+- Reconcile inventory movement across multiple business tables.
+- Create a star schema Power BI model.
+- Build DAX measures for business KPIs.
+- Design an interactive dashboard for business decision-making.
+
+---
+
+## Skills Demonstrated
+
+- Data Cleaning
+- Data Validation
+- SQL Analysis
+- T-SQL CTEs
+- Window Functions
+- Joins
+- Aggregations
+- ABC Analysis
+- Vendor Analysis
+- Inventory Reconciliation
+- Power BI Data Modeling
+- Star Schema Design
+- DAX Measures
+- KPI Reporting
+- Dashboard Development
+- Business Insight Generation
+
+---
+
+## Dashboard Preview
+<img width="1366" height="674" alt="Screenshot (362)" src="https://github.com/user-attachments/assets/80e04c15-6d09-4b15-a1a6-9f8f9c6e889a" />
 
 
-  
- <img width="1358" height="649" alt="image" src="https://github.com/user-attachments/assets/c5b94b02-70ad-47eb-bd6a-796b82ac6d73" />
+<img width="1362" height="669" alt="Screenshot (363)" src="https://github.com/user-attachments/assets/8212b465-8190-4663-8110-528dbca4eaf9" />
 
 
-## Data Model:
-**The underlying data model includes the following tables and relationships:**
+<img width="1366" height="674" alt="Screenshot (364)" src="https://github.com/user-attachments/assets/07acea7b-047b-43bf-ab9d-de396ee1a819" />
 
-- PurchaseContribution: Contains PurchaseContribution%, TotalPurchaseDollars, and VendorName.
-- vendor_sales_summary: Includes ActualPrice, Brand, Description, FreightCost, GrossProfit, and ProfitMargin.
-- LowTurnoverVendor: Tracks AvgStockTurnOver and VendorName.
-- BrandPerformance: Features AvgProfitMargin, Description, TargetBrand, and TotalSales.
+
+<img width="1345" height="690" alt="Screenshot (365)" src="https://github.com/user-attachments/assets/db312506-f898-4b36-9630-49cdf7a497ac" />
 
 
 
-<img width="1366" height="768" alt="Screenshot (59)" src="https://github.com/user-attachments/assets/ce13b028-b996-4d05-8ecd-f55207510ad2" />
+<img width="1362" height="674" alt="Screenshot (367)" src="https://github.com/user-attachments/assets/e2220793-7f38-4825-b3d1-26ae6710c2bc" />
 
-
-
-## The model is structured with calculated groups and relationships to enable dynamic analysis of vendor and brand performance metrics.
 
