@@ -227,7 +227,7 @@ GROUP BY
 ORDER BY TotalPurchaseQuantity DESC;
 
 /*
-Top purchase-quantity products are mainly 50mL items like Smirnoff 80 Proof, Yukon Jack, and Dr McGillicuddy’s. 
+Top purchase-quantity products are mainly 50mL items like Smirnoff 80 Proof, Yukon Jack, and Dr McGillicuddyâ€™s. 
 This again matches our sales analysis: 50mL products drive unit volume, while 1.75L products drive revenue/value.
 */
 
@@ -346,7 +346,7 @@ HAVING SUM(Dollars) >= 10000
 ORDER BY FreightPct DESC;
 
 /*
-Vendor freight percentage was highly consistent, mostly around 0.50%–0.54%, indicating stable freight cost behavior across vendors.
+Vendor freight percentage was highly consistent, mostly around 0.50%â€“0.54%, indicating stable freight cost behavior across vendors.
 */
 
 -- ============================================================
@@ -393,7 +393,7 @@ WHERE InvoiceDate IS NOT NULL
 
 /*
 Payment cycle analysis showed that vendor invoices were paid in an average of 35 days,
-with most invoices falling in the range of 31–45 days 
+with most invoices falling in the range of 31â€“45 days 
 */
 
 
@@ -592,7 +592,7 @@ But it is not exact gross profit because it is not calculating sold-unit COGS .
 */
 
 -- ============================================================
--- 20A. PRODUCTS PURCHASED BUT NOT SOLD
+-- 20. PRODUCTS PURCHASED BUT NOT SOLD
 -- Purpose: Identify products purchased during the year with no matching positive sales
 -- ============================================================
 
@@ -644,7 +644,7 @@ They may be new stock, slow-moving inventory, year-end purchases, or product-siz
 
 
 -- ============================================================
--- 20B. WEAK-SELLING PURCHASED PRODUCTS
+-- 21. WEAK-SELLING PURCHASED PRODUCTS
 -- Purpose: Identify products that were purchased and sold, but sales are low compared to purchase investment
 -- ============================================================
 
@@ -712,7 +712,7 @@ Need to be care full next time and note the products
 */
 
 -- ============================================================
--- 21. ZERO-COST PURCHASE ANALYSIS
+-- 22. ZERO-COST PURCHASE ANALYSIS
 -- Purpose: Analyze purchase records where quantity exists but purchase cost is zero
 -- ============================================================
 
@@ -743,7 +743,7 @@ VendorNumber	VendorName	       Brand	Description             	Size	      ZeroCos
 
 
 -- ============================================================
--- 22. ZERO-COST PURCHASE IMPACT BY VENDOR
+-- 23. ZERO-COST PURCHASE IMPACT BY VENDOR
 -- Purpose: Identify vendors associated with zero-cost purchase records
 -- ============================================================
 
