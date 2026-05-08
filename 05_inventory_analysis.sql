@@ -228,7 +228,7 @@ This comparison helps identify product movement, new stock additions, and possib
 */
 
 -- ============================================================
--- 11. OVERALL INVENTORY MOVEMENT VALIDATION
+-- 9. OVERALL INVENTORY MOVEMENT VALIDATION
 -- Purpose: Validate total stock movement at overall business level
 -- Formula: Expected Ending Stock = Beginning Stock + Purchased Quantity - Sold Quantity
 -- ============================================================
@@ -278,7 +278,7 @@ CROSS JOIN EndInv e;
 
 
 -- ============================================================
--- 13. SLOW-MOVING PRODUCTS WITH ENDING STOCK
+-- 10. SLOW-MOVING PRODUCTS WITH ENDING STOCK
 -- Purpose: Identify products with low sell-through and remaining inventory value
 -- ============================================================
 
@@ -347,7 +347,7 @@ ORDER BY e.EndingInventoryValue DESC;
 
 
 -- ============================================================
--- 14. HIGH-VALUE UNSOLD INVENTORY
+-- 11. HIGH-VALUE UNSOLD INVENTORY
 -- Purpose: Identify products where business capital is blocked in ending inventory
 -- ============================================================
 
@@ -365,7 +365,7 @@ ORDER BY EndingInventoryValue DESC;
 
 
 -- ============================================================
--- 15. ABC ANALYSIS - ENDING INVENTORY VALUE
+-- 12. ABC ANALYSIS - ENDING INVENTORY VALUE
 -- Purpose: Classify products based on closing inventory value contribution
 -- A = Products contributing up to 70% of inventory value
 -- B = Next products contributing up to 90%
