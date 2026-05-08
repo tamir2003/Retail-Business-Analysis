@@ -56,7 +56,7 @@ FROM dbo.clean_end_inventory;
 -- Therefore, only one date is expected in each inventory table.
 
 -- ============================================================
--- 5. BUSINESS ENTITY COUNT CHECK
+-- 3. BUSINESS ENTITY COUNT CHECK
 -- Purpose: Understand number of stores, brands, vendors, products
 -- ============================================================
 
@@ -104,7 +104,7 @@ WHERE s.VendorNo IS NULL
 ORDER BY p.VendorName;
 
 -- ============================================================
--- 6. SALES AMOUNT VALIDATION
+-- 4. SALES AMOUNT VALIDATION
 -- Purpose: Check whether SalesDollars = SalesQuantity * SalesPrice
 -- ============================================================
 
@@ -116,7 +116,7 @@ WHERE ABS(SalesDollars - ROUND(SalesQuantity * SalesPrice, 2)) > 0.05;
 -- zero mismatch
 
 -- ============================================================
--- 7. PURCHASE AMOUNT VALIDATION
+-- 5. PURCHASE AMOUNT VALIDATION
 -- Purpose: Check whether Dollars = Quantity * PurchasePrice
 -- ============================================================
 
@@ -128,7 +128,7 @@ WHERE ABS(Dollars - ROUND(Quantity * PurchasePrice, 2)) > 0.05;
 -- zero mismatch
 
 -- ============================================================
--- 8. NEGATIVE OR ZERO VALUE CHECK
+-- 6. NEGATIVE OR ZERO VALUE CHECK
 -- Purpose: Identify invalid or unusual numeric values
 -- ============================================================
 
@@ -191,7 +191,7 @@ WHERE Quantity <= 0
 
 
 -- ============================================================
--- 9. VENDOR CONSISTENCY CHECK
+-- 7. VENDOR CONSISTENCY CHECK
 -- Purpose: Check whether one VendorNumber maps to multiple VendorNames
 -- ============================================================
 
@@ -261,7 +261,7 @@ WHERE VendorNumber = 1587;
 
 
 -- ============================================================
--- 10. BRAND / PRODUCT CONSISTENCY CHECK
+-- 8. BRAND / PRODUCT CONSISTENCY CHECK
 -- Purpose: Check whether one Brand has multiple descriptions or sizes
 -- ============================================================
 
@@ -281,7 +281,7 @@ For accurate analysis, product-level joins were handled using Brand and Size ins
 
 
 -- ============================================================
--- 11. INVENTORY VALUE VALIDATION
+-- 9. INVENTORY VALUE VALIDATION
 -- Purpose: Validate calculated inventory value columns
 -- ============================================================
 
